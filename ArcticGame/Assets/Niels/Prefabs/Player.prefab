@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1525273955858461349}
   - component: {fileID: 1525273955858461346}
   - component: {fileID: 1525273955858461347}
+  - component: {fileID: 7969300283127499004}
+  - component: {fileID: 3577304656179538090}
   - component: {fileID: 1525273955858461344}
   - component: {fileID: 1525273955858461345}
   - component: {fileID: 1525273955858461351}
@@ -100,11 +102,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6db9c3a9b81f834f9efe31f278b8431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camFocus: {fileID: 0}
-  animator: {fileID: 0}
-  mountedDirObject: {fileID: 0}
   movementSpeed: 10
   mounted: 0
+--- !u!114 &7969300283127499004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525273955858461358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05422203ed260bf4fa089744ad396a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3577304656179538090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525273955858461358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47957d1cdadef9e4b8493e562c031a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &1525273955858461344
 CapsuleCollider:
   m_ObjectHideFlags: 0
