@@ -410,6 +410,9 @@
         },
         {
             "m_Id": "278144cd9a434aa7961caf650533c444"
+        },
+        {
+            "m_Id": "f56cc298a980407c939b4a4ceafcdd3b"
         }
     ],
     "m_GroupDatas": [
@@ -1855,6 +1858,20 @@
                     "m_Id": "87b67299f7544173826a0db51c4a71c4"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "f56cc298a980407c939b4a4ceafcdd3b"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "2ecae8ff6ea64df99faffe2928394e45"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -8955,6 +8972,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "a18a37a310c84a65b264416936c6be53",
+    "m_Id": -1562123133,
+    "m_DisplayName": "Curvature",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Curvature",
+    "m_StageCapability": 3,
+    "m_Value": 0.004999999888241291,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.MultiplyNode",
     "m_ObjectId": "a1c73e47441c4a11b1b0b15cac5b7bf1",
     "m_Group": {
@@ -9046,6 +9078,29 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "a36ab6e186c8462f82f827c8bba6a83f",
+    "m_Id": 1,
+    "m_DisplayName": "Bending",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Bending",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
     },
     "m_Labels": []
 }
@@ -13016,6 +13071,50 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "f56cc298a980407c939b4a4ceafcdd3b",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "World Bend",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1222.905029296875,
+            "y": -629.5547485351563,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "a18a37a310c84a65b264416936c6be53"
+        },
+        {
+            "m_Id": "a36ab6e186c8462f82f827c8bba6a83f"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"37babfd99f000154c9709ec6f57c762c\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "87c478ca-9e52-4e8a-a67b-08fdbd79a596"
+    ],
+    "m_PropertyIds": [
+        -1562123133
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
 }
 
 {
