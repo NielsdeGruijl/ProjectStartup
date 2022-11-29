@@ -6,14 +6,30 @@ using UnityEngine.UI;
 public class PlayerInteractions : MonoBehaviour
 {
     [SerializeField] private UIManager manager;
+
+    [Header("fishing game")]
+    [SerializeField] private GameObject fishingGame;
+    [SerializeField] private GameObject fish;
+    [SerializeField] private GameObject catchArea;
+
     private GameObject animal;
 
+    private RectTransform fishRect;
+
     private float totalFish = 0;
+    private float fishSpeed = 100;
 
     public bool mounted = false;
     private bool bobBefriended = false;
     private bool inAnimalRange = false;
     private bool inWaterRange = false;
+    private bool catchingFish = false;
+
+    private void Start()
+    {
+        fishingGame.SetActive(false);
+        fishRect = fishingGame.GetComponent<RectTransform>();
+    }
 
     private void Update()
     {
@@ -25,7 +41,19 @@ public class PlayerInteractions : MonoBehaviour
         if (inAnimalRange)
             AnimalInteraction();
         if (inWaterRange)
+        {
+            manager.SetInteractionText("Press F to fish");
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                catchingFish = true;
+            }
+        }
+
+        if (catchingFish)
+        {
             CatchFish();
+        }
+            
 
         if (mounted)
         {
@@ -37,7 +65,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             transform.SetParent(null);
             mounted = false;
-            Debug.Log("You unmounted Bob");
+            Debug.Log("You unmounted Po");
         }
     }
 
@@ -45,11 +73,11 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.CompareTag("PolarBear"))
         {
-            Debug.Log("Press F to befriend Bob");
+            Debug.Log("Press F to befriend Po");
             animal = other.gameObject;
             inAnimalRange = true;
         }
-        if (other.CompareTag("Water"))
+        if (other.CompareTag("fish"))
         {
             inWaterRange = true;
         }
@@ -63,7 +91,7 @@ public class PlayerInteractions : MonoBehaviour
             inAnimalRange = false;
         }
 
-        if (other.CompareTag("Water"))
+        if (other.CompareTag("fish"))
         {
             inWaterRange = false;
         }
@@ -80,7 +108,7 @@ public class PlayerInteractions : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.F) && bobBefriended && !mounted)
             {
-                Debug.Log("You mounted Bob");
+                Debug.Log("You mounted Po");
                 StartCoroutine(wait());
             }
             if (Input.GetKeyUp(KeyCode.F) && !bobBefriended && !mounted)
@@ -90,7 +118,8 @@ public class PlayerInteractions : MonoBehaviour
                     manager.SetFeedbackText("Po likes you");
                     manager.displayFeedback1 = true;
                     totalFish--;
-                    Debug.Log("You befriended Bob");
+                    manager.AddFish(totalFish);
+                    Debug.Log("You befriended Po");
                     bobBefriended = true;
                 }
                 else
@@ -105,12 +134,40 @@ public class PlayerInteractions : MonoBehaviour
 
     private void CatchFish()
     {
-        manager.SetInteractionText("Press F to fish");
+        manager.SetInteractionText("Press SpaceBar to catch");
+        fishingGame.SetActive(true);
 
-        if (Input.GetKeyUp(KeyCode.F))
+        MoveFish();
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            totalFish++;
-            manager.AddFish(totalFish);
+            if (fish.transform.localPosition.x >= catchArea.transform.localPosition.x)
+            {
+                manager.SetFeedbackText("You caught a fish!");
+                manager.displayFeedback1 = true;
+                totalFish++;
+                manager.AddFish(totalFish);
+            }
+            else
+            {
+                manager.SetFeedbackText("You missed!");
+                manager.displayFeedback1 = true;
+            }
+
+            fish.transform.localPosition = Vector3.zero;
+            fishingGame.SetActive(false);
+            catchingFish = false;
+        }
+    }
+
+    private void MoveFish()
+    {
+        float multiplier = 1 + ((fish.transform.localPosition.x / fishRect.rect.width) * 5);
+        fish.transform.Translate((Vector3.right * fishSpeed * multiplier) * Time.deltaTime);
+
+        if (fish.transform.localPosition.x >= fishRect.rect.width || fish.transform.localPosition.x <= 0)
+        {
+            fishSpeed *= -1;
         }
     }
 

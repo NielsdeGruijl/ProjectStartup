@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PolarBear
   - Water
+  - fish
   layers:
   - Default
   - TransparentFX
