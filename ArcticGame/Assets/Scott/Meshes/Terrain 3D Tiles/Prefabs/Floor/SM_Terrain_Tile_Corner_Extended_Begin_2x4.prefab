@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6268793852714963766}
   - component: {fileID: 7012352417672289427}
   - component: {fileID: 5094721366589286489}
+  - component: {fileID: 9109718738956890985}
   m_Layer: 0
   m_Name: SM_Terrain_Tile_Corner_Extended_Begin_2x4
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7899413904706869776, guid: 1c5d4c52abbd5bb47bc689e6b9e9ac8a, type: 3}
+  - {fileID: 2100000, guid: 739fa958b14d21e46b2af4883967ed14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9109718738956890985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6752279470302431628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0, z: 2}
+  m_Center: {x: 1, y: 4, z: -1}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3595738765880736692}
   - component: {fileID: 453028262766130193}
   - component: {fileID: 2426751389099344091}
+  - component: {fileID: 5941287838214280152}
   m_Layer: 0
   m_Name: SM_Terrain_Tile_Corner_Cliff_Extended_Begin_2x4
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7899413904706869776, guid: c4d02189f8ab17f4a90583223dc2d609, type: 3}
+  - {fileID: 2100000, guid: 739fa958b14d21e46b2af4883967ed14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5941287838214280152
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228160934597386510}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4775388278072554308, guid: c4d02189f8ab17f4a90583223dc2d609, type: 3}

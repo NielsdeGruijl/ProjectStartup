@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9041476854661057428}
   - component: {fileID: 5392529347405022257}
   - component: {fileID: 7868610532924911867}
+  - component: {fileID: 6964904362582021220}
   m_Layer: 0
   m_Name: SM_Terrain_Tile_Cliff_2x2
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7899413904706869776, guid: b4713ac2fae9d0f418a560b3eb82fa5a, type: 3}
+  - {fileID: 2100000, guid: 739fa958b14d21e46b2af4883967ed14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6964904362582021220
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516896127227613486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 2, z: 2}
+  m_Center: {x: 0, y: 1, z: -1}
