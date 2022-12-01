@@ -5,7 +5,6 @@ using UnityEngine;
 public class PauseScript : MonoBehaviour
 {
     [SerializeField] private GameObject pausedMenu;
-    [SerializeField] private PlayerInteractions playerScript;
 
     public bool gamePaused = false;
 

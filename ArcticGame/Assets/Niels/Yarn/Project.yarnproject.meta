@@ -9,10 +9,10 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
   sourceScripts:
-  - {fileID: 6391573757903218779, guid: b86ab21d139f5da4e8feaf9ee6ea815a, type: 3}
+  - {fileID: 6391573757903218779, guid: 953d7c3b4c876a04d873e04700b4340c, type: 3}
   compileErrors: []
   serializedDeclarations: []
-  defaultLanguage: nl-NL
+  defaultLanguage: en
   languagesToSourceAssets: []
   useAddressableAssets: 0
   searchAllAssembliesForActions: 1

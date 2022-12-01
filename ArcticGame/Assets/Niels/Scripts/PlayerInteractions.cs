@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Yarn.Unity;
 
 public class PlayerInteractions : MonoBehaviour
 {
+    [Header("General Stuff")]
     [SerializeField] private UIManager manager;
+    [SerializeField] private PauseScript pause;
+    [SerializeField] private DialogueRunner dRunner;
 
-    [Header("fishing game")]
+    [Header("Fishing Game")]
     [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject fish;
     [SerializeField] private GameObject catchArea;
+    [SerializeField] private GameObject fishCamera;
 
     private GameObject animal;
 
@@ -20,15 +25,18 @@ public class PlayerInteractions : MonoBehaviour
     private float fishSpeed = 100;
 
     public bool mounted = false;
+    private bool hasIntroduced = false;
     private bool bobBefriended = false;
     private bool inAnimalRange = false;
     private bool inWaterRange = false;
     private bool catchingFish = false;
+    private bool throwSpear = false;
 
     private void Start()
     {
         fishingGame.SetActive(false);
         fishRect = fishingGame.GetComponent<RectTransform>();
+        dRunner.Stop();
     }
 
     private void Update()
@@ -39,33 +47,30 @@ public class PlayerInteractions : MonoBehaviour
             manager.displayText1 = false;
 
         if (inAnimalRange)
-            AnimalInteraction();
-        if (inWaterRange)
         {
-            manager.SetInteractionText("Press F to fish");
-            if (Input.GetKeyUp(KeyCode.F))
-            {
-                catchingFish = true;
-            }
+            if (!hasIntroduced)
+                manager.SetInteractionText("Press F to talk");
+            if (!bobBefriended && hasIntroduced)
+                manager.SetInteractionText("Press F to feed");
+            if (bobBefriended)
+                manager.SetInteractionText("Press F to mount");
         }
 
+        if (inWaterRange)
+            manager.SetInteractionText("Press F to fish");
+
         if (catchingFish)
-        {
             CatchFish();
+
+        if (!pause.gamePaused)
+        {
+            PlayerInput();
         }
-            
 
         if (mounted)
         {
             manager.displayText1 = true;
             manager.SetInteractionText("Press F to dismount");
-        }
-
-        if (Input.GetKeyUp(KeyCode.F) && mounted)
-        {
-            transform.SetParent(null);
-            mounted = false;
-            Debug.Log("You unmounted Po");
         }
     }
 
@@ -97,21 +102,51 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    private void PlayerInput()
+    {
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            if (inAnimalRange)
+            {
+                AnimalInteraction();
+            }
+            if (inWaterRange)
+            {
+                catchingFish = true;
+            }
+            if (mounted)
+            {
+                transform.SetParent(null);
+                mounted = false;
+                Debug.Log("You unmounted Po");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (catchingFish)
+            {
+                throwSpear = true;
+            }
+        }
+    }
+
     private void AnimalInteraction()
     {
         if (animal != null)
         {
-            if (!bobBefriended)
-                manager.SetInteractionText("Press F to feed");
-            if (bobBefriended)
-                manager.SetInteractionText("Press F to mount");
-
-            if (Input.GetKeyUp(KeyCode.F) && bobBefriended && !mounted)
+            if(!hasIntroduced)
+            {
+                dRunner.StartDialogue("Polar");
+                dRunner.Stop();
+                hasIntroduced = true;
+            }
+            if (bobBefriended && !mounted)
             {
                 Debug.Log("You mounted Po");
                 StartCoroutine(wait());
             }
-            if (Input.GetKeyUp(KeyCode.F) && !bobBefriended && !mounted)
+            if (!bobBefriended && !mounted && hasIntroduced)
             {
                 if(totalFish > 0)
                 {
@@ -136,10 +171,11 @@ public class PlayerInteractions : MonoBehaviour
     {
         manager.SetInteractionText("Press SpaceBar to catch");
         fishingGame.SetActive(true);
+        fishCamera.SetActive(true);
 
         MoveFish();
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (throwSpear)
         {
             if (fish.transform.localPosition.x >= catchArea.transform.localPosition.x)
             {
@@ -156,6 +192,8 @@ public class PlayerInteractions : MonoBehaviour
 
             fish.transform.localPosition = Vector3.zero;
             fishingGame.SetActive(false);
+            fishCamera.SetActive(false);
+            throwSpear = false;
             catchingFish = false;
         }
     }

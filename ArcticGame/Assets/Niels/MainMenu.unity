@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1188.0635, g: 1423.207, b: 1875.0801, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -954,6 +954,94 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &1860006245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 518821351251231299, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 706.5083
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 554.20844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.28056
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192006869789936289, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242692126044896971, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: sounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242692126044896971, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+      propertyPath: sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 1860006247}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+--- !u!1 &1860006246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 518821351251231299, guid: dac28f5d9a9dfbe4ba8ae2a920e38449, type: 3}
+  m_PrefabInstance: {fileID: 1860006245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860006247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860006246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b788d04cffcc641b027d40ab1b54a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: BackGroundMusic
+  clip: {fileID: 8300000, guid: abe1c24bf35167a44b2405a0410fdf35, type: 3}
+  volume: 1
+  loop: 1
+  type: 1
+  source: {fileID: 0}
 --- !u!1 &2003674889
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private PauseScript pause;
+
     private Rigidbody rb;
 
     private Vector3 playerVelocity;
@@ -24,7 +26,13 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        Walking();
+        if (pause.gamePaused)
+            playerVelocity = Vector3.zero;
+        else
+            Walking();
+        
+
+        
     }
 
     private void Walking()
