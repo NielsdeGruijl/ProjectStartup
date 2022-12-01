@@ -30,9 +30,6 @@ public class Movement : MonoBehaviour
             playerVelocity = Vector3.zero;
         else
             Walking();
-        
-
-        
     }
 
     private void Walking()

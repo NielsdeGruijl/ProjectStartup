@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 782e7ad691cba0f4299994ae49fbeb57, type: 2}
+  - {fileID: 2100000, guid: 71ee2ae77505c4f4287fea5317c44ffd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6db9c3a9b81f834f9efe31f278b8431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pause: {fileID: 0}
   movementSpeed: 10
-  mounted: 0
 --- !u!114 &7969300283127499004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +116,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05422203ed260bf4fa089744ad396a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  pause: {fileID: 0}
+  dRunner: {fileID: 0}
+  fishingGame: {fileID: 0}
+  fish: {fileID: 0}
+  catchArea: {fileID: 0}
+  fishCamera: {fileID: 0}
+  mounted: 0
 --- !u!114 &3577304656179538090
 MonoBehaviour:
   m_ObjectHideFlags: 0
