@@ -32,8 +32,8 @@ public class PlayerInteractions : MonoBehaviour
     private bool catchingFish = false;
     private bool throwSpear = false;
 
-    private bool polar1 = true;
-    private bool polar2 = true;
+    private bool polar1 = false;
+    private bool polar2 = false;
     private bool bridge1 = false;
 
     private void Start()
@@ -160,7 +160,7 @@ public class PlayerInteractions : MonoBehaviour
             {
                 pause.gamePaused = true;
                 dRunner.StartDialogue("Polar");
-                dRunner.Stop();
+                //dRunner.Stop();
                 polar1 = true;
             }
             if (polar2 && !mounted)
@@ -174,7 +174,7 @@ public class PlayerInteractions : MonoBehaviour
                 {
                     pause.gamePaused = true;
                     dRunner.StartDialogue("Polar2");
-                    dRunner.Stop();
+                    //dRunner.Stop();
 /*                    manager.SetFeedbackText("Po likes you");
                     manager.displayFeedback1 = true;*/
                     totalFish--;
@@ -198,7 +198,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             pause.gamePaused = true;
             dRunner.StartDialogue("Bridge1");
-            dRunner.Stop();
+            //dRunner.Stop();
             bridge1 = true;
         }
         if (bridge1 && polar2 && mounted)
