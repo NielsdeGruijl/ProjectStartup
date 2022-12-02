@@ -803,6 +803,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1943612957, guid: 83bc581c09db4ac4d8950ef1769787fa, type: 3}
+      propertyPath: m_Name
+      value: FishCam
+      objectReference: {fileID: 0}
     - target: {fileID: 6558023709745657485, guid: 83bc581c09db4ac4d8950ef1769787fa, type: 3}
       propertyPath: m_RootOrder
       value: 2

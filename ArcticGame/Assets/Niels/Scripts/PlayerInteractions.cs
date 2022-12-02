@@ -10,12 +10,13 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private UIManager manager;
     [SerializeField] private PauseScript pause;
     [SerializeField] private DialogueRunner dRunner;
+    [SerializeField] private LineView lineView;
 
     [Header("Fishing Game")]
     [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject fish;
     [SerializeField] private GameObject catchArea;
-    [SerializeField] private GameObject fishCamera;
+    private GameObject fishCamera;
 
     private GameObject animal;
 
@@ -25,39 +26,48 @@ public class PlayerInteractions : MonoBehaviour
     private float fishSpeed = 100;
 
     public bool mounted = false;
-    private bool hasIntroduced = false;
-    private bool bobBefriended = false;
-    private bool inAnimalRange = false;
-    private bool inWaterRange = false;
+    private bool nearPo = false;
+    private bool nearWater = false;
+    private bool nearBridge = false;
     private bool catchingFish = false;
     private bool throwSpear = false;
 
+    private bool polar1 = true;
+    private bool polar2 = true;
+    private bool bridge1 = false;
+
     private void Start()
     {
+        pause.gamePaused = true;
+
+        if (mounted)
+            pause.gamePaused = false;
+
         fishingGame.SetActive(false);
         fishRect = fishingGame.GetComponent<RectTransform>();
-        dRunner.Stop();
+        //dRunner.Stop();
     }
 
     private void Update()
     {
-        if (inAnimalRange || inWaterRange || mounted)
+        if (nearPo || nearWater || mounted || nearBridge)
             manager.displayText1 = true;
         else
             manager.displayText1 = false;
 
-        if (inAnimalRange)
+        if (nearPo)
         {
-            if (!hasIntroduced)
+            if (!polar1 || !polar2)
                 manager.SetInteractionText("Press F to talk");
-            if (!bobBefriended && hasIntroduced)
-                manager.SetInteractionText("Press F to feed");
-            if (bobBefriended)
+/*            if (!befriended && polar1)
+                manager.SetInteractionText("Press F to feed");*/
+            if (polar2)
                 manager.SetInteractionText("Press F to mount");
         }
-
-        if (inWaterRange)
+        if (nearWater)
             manager.SetInteractionText("Press F to fish");
+        if (nearBridge)
+            manager.SetInteractionText("Press F to interact");
 
         if (catchingFish)
             CatchFish();
@@ -78,13 +88,17 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (other.CompareTag("PolarBear"))
         {
-            Debug.Log("Press F to befriend Po");
             animal = other.gameObject;
-            inAnimalRange = true;
+            nearPo = true;
         }
         if (other.CompareTag("fish"))
         {
-            inWaterRange = true;
+            fishCamera = other.transform.Find("FishCam").gameObject;
+            nearWater = true;
+        }
+        if (other.CompareTag("Bridge"))
+        {
+            nearBridge = true;
         }
     }
 
@@ -93,12 +107,15 @@ public class PlayerInteractions : MonoBehaviour
         if (other.CompareTag("PolarBear"))
         {
             animal = null;
-            inAnimalRange = false;
+            nearPo = false;
         }
-
         if (other.CompareTag("fish"))
         {
-            inWaterRange = false;
+            nearWater = false;
+        }
+        if (other.CompareTag("Bridge"))
+        {
+            nearBridge = false;
         }
     }
 
@@ -106,19 +123,23 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.F))
         {
-            if (inAnimalRange)
+            if (nearPo)
             {
                 AnimalInteraction();
             }
-            if (inWaterRange)
+            if (nearWater)
             {
                 catchingFish = true;
+            }
+            if (nearBridge)
+            {
+                BridgeInteraction();
             }
             if (mounted)
             {
                 transform.SetParent(null);
                 mounted = false;
-                Debug.Log("You unmounted Po");
+                //Debug.Log("You unmounted Po");
             }
         }
 
@@ -135,27 +156,31 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (animal != null)
         {
-            if(!hasIntroduced)
+            if(!polar1 && bridge1)
             {
+                pause.gamePaused = true;
                 dRunner.StartDialogue("Polar");
                 dRunner.Stop();
-                hasIntroduced = true;
+                polar1 = true;
             }
-            if (bobBefriended && !mounted)
+            if (polar2 && !mounted)
             {
-                Debug.Log("You mounted Po");
+                //Debug.Log("You mounted Po");
                 StartCoroutine(wait());
             }
-            if (!bobBefriended && !mounted && hasIntroduced)
+            if (!polar2 && !mounted && polar1)
             {
                 if(totalFish > 0)
                 {
-                    manager.SetFeedbackText("Po likes you");
-                    manager.displayFeedback1 = true;
+                    pause.gamePaused = true;
+                    dRunner.StartDialogue("Polar2");
+                    dRunner.Stop();
+/*                    manager.SetFeedbackText("Po likes you");
+                    manager.displayFeedback1 = true;*/
                     totalFish--;
                     manager.AddFish(totalFish);
-                    Debug.Log("You befriended Po");
-                    bobBefriended = true;
+                    //Debug.Log("You befriended Po");
+                    polar2 = true;
                 }
                 else
                 {
@@ -164,6 +189,21 @@ public class PlayerInteractions : MonoBehaviour
                 }
 
             }
+        }
+    }
+
+    private void BridgeInteraction()
+    {
+        if (!bridge1)
+        {
+            pause.gamePaused = true;
+            dRunner.StartDialogue("Bridge1");
+            dRunner.Stop();
+            bridge1 = true;
+        }
+        if (bridge1 && polar2 && mounted)
+        {
+
         }
     }
 
@@ -209,10 +249,17 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    [YarnCommand("ContinueGame")]
+    public void ContinueGame()
+    {
+        pause.gamePaused = false;
+        //Debug.Log("Game continued");
+    }
+
     IEnumerator wait()
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("mounted set to True");
+        //Debug.Log("mounted set to True");
         mounted = true;
     }
 }

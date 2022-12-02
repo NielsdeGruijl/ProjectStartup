@@ -1,16 +1,39 @@
 ﻿title: Start
-tags:
 ---
-Where did everyone go?
-I better go look for them.
+Nukilik: Where are my parents?!
+Nukilik: I need to go find them!
+<<ContinueGame Player>>
+===
 
+title: Flag
+---
+Nukilik: Dad used these to mark routes.
+===
+
+title: Bridge1
+---
+Nukilik: Oh no, the storm broke the bridge!
+Nukilik: The gap is too big for me to cross, I need to find another way.
+<<ContinueGame Player>>
 ===
 
 title: Polar
-tags:
 ---
-Po: Hello! MY name is Po, what's your name?
-Po: Do you have some fish for me?
-Po: I'm very hungry and the water is too cold.
+Po: I'm so hungry! But I'm too scared to swim.
+Nukilik: Can I help you?
+Po: Can you get a fish for me please? I already made a hole in the ice, I'll owe you one.
+<<ContinueGame Player>>
+===
 
+title: Spear
+---
+Nukilik: I need the spear from home.
+===
+
+title: Polar2
+---
+Po: Thank you! Is there anything I can help you with in return?
+Nukilik: The bridge broke down, do you know a way to cross it?
+Po: "Yes, I'm a great jumper! Hop on my back and I'll jump over.
+<<ContinueGame Player>>
 ===

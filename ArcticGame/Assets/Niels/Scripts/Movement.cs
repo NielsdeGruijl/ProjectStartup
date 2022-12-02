@@ -22,6 +22,7 @@ public class Movement : MonoBehaviour
         {
             rb = GetComponent<Rigidbody>();
         }
+        
     }
 
     private void Update()

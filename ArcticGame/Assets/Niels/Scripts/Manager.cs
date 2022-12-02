@@ -1,37 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Manager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject mountedPlayer;
     [SerializeField] private GameObject polarBear;
+    [SerializeField] private CinemachineVirtualCamera vcam;
 
-    private PlayerInteractions character;
-    private PlayerInteractions mountedCharacter;
+    private PlayerInteractions playerScript;
+    private PlayerInteractions mountedPlayerScript;
 
     private bool hasMounted = false;
 
     private void Start()
     {
-        character = player.GetComponent<PlayerInteractions>();
-        mountedCharacter = mountedPlayer.GetComponent<PlayerInteractions>();
+        playerScript = player.GetComponent<PlayerInteractions>();
+        mountedPlayerScript = mountedPlayer.GetComponent<PlayerInteractions>();
     }
 
     private void Update()
     {
-        if(character.mounted && !hasMounted)
+        if(playerScript.mounted && !hasMounted)
         {
             MountPlayer();
             hasMounted = true;
-            mountedCharacter.mounted = true;
+            mountedPlayerScript.mounted = true;
         }
-        if(!mountedCharacter.mounted && hasMounted)
+        if(!mountedPlayerScript.mounted && hasMounted)
         {
             dismountPlayer();
             hasMounted = false;
-            character.mounted = false;
+            playerScript.mounted = false;
         }
     }
 
@@ -39,8 +41,9 @@ public class Manager : MonoBehaviour
     {
         player.SetActive(false);
         polarBear.SetActive(false);
-        mountedPlayer.transform.position = new Vector3(polarBear.transform.position.x, polarBear.transform.position.y + 2.5f, polarBear.transform.position.z);
+        mountedPlayer.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z);
         mountedPlayer.transform.rotation = polarBear.transform.rotation;
+        vcam.Follow = mountedPlayer.transform;
         mountedPlayer.SetActive(true);
     }
 
@@ -49,6 +52,7 @@ public class Manager : MonoBehaviour
         Debug.Log("dismounting player...");
         player.transform.position = mountedPlayer.transform.position;
         polarBear.transform.position = new Vector3(mountedPlayer.transform.position.x + 1, mountedPlayer.transform.position.y - 2.5f, mountedPlayer.transform.position.z);
+        vcam.Follow = player.transform;
         player.SetActive(true);
         polarBear.SetActive(true);
         mountedPlayer.SetActive(false);

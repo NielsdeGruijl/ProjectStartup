@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1525273955858461346}
   - component: {fileID: 1525273955858461347}
   - component: {fileID: 7969300283127499004}
+  - component: {fileID: 774785783217822089}
   - component: {fileID: 3577304656179538090}
   - component: {fileID: 1525273955858461344}
   - component: {fileID: 1525273955858461345}
@@ -119,11 +120,23 @@ MonoBehaviour:
   manager: {fileID: 0}
   pause: {fileID: 0}
   dRunner: {fileID: 0}
+  lineView: {fileID: 0}
   fishingGame: {fileID: 0}
   fish: {fileID: 0}
   catchArea: {fileID: 0}
-  fishCamera: {fileID: 0}
   mounted: 0
+--- !u!114 &774785783217822089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525273955858461358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbebfd027ece844d84e076cef235cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3577304656179538090
 MonoBehaviour:
   m_ObjectHideFlags: 0
