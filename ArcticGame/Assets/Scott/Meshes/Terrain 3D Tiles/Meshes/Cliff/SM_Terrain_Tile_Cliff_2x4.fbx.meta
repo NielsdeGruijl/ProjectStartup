@@ -3,12 +3,7 @@ guid: 099b214f89a7ce84e93e7ba2c697b4fd
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MI_Terrain
-    second: {fileID: 2100000, guid: 739fa958b14d21e46b2af4883967ed14, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
