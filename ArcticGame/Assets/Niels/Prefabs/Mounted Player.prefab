@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PolarBear
       objectReference: {fileID: 0}
+    - target: {fileID: 4384234573404986795, guid: f63521933cdc5cb43bde8c2af5862a3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5433328015309601381, guid: f63521933cdc5cb43bde8c2af5862a3d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -160,7 +164,8 @@ PrefabInstance:
       propertyPath: mounted
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 774785783217822089, guid: 5544553e349e1c24e9e6f210106ad9cf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5544553e349e1c24e9e6f210106ad9cf, type: 3}
 --- !u!4 &2805090396319623662 stripped
 Transform:
