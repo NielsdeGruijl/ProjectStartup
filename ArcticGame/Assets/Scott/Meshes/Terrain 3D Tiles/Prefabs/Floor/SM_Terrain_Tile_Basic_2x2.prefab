@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2694537501408956034}
   - component: {fileID: 1354228896148226343}
   - component: {fileID: 3832500921601684973}
+  - component: {fileID: 8508225057097966559}
   m_Layer: 0
   m_Name: SM_Terrain_Tile_Basic_2x2
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7899413904706869776, guid: b2de47c715bace745b796fe7cc73d36e, type: 3}
+  - {fileID: 2100000, guid: 739fa958b14d21e46b2af4883967ed14, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8508225057097966559
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327943762826712120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0000005, y: 0, z: 2.0000005}
+  m_Center: {x: 1.0000002, y: 2, z: -1.0000002}
