@@ -32,6 +32,7 @@ public class PlayerInteractions : MonoBehaviour
     private bool catchingFish = false;
     private bool throwSpear = false;
 
+    private bool isTalking = false;
     private bool polar1 = false;
     private bool polar2 = false;
     private bool bridge1 = false;
@@ -50,8 +51,13 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Update()
     {
-        if (nearPo || nearWater || mounted || nearBridge)
-            manager.displayText1 = true;
+        if (!isTalking)
+        {
+            if(nearPo || nearWater || mounted || nearBridge)
+                manager.displayText1 = true;
+            else
+                manager.displayText1 = false;
+        }
         else
             manager.displayText1 = false;
 
@@ -156,38 +162,44 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (animal != null)
         {
-            if(!polar1 && bridge1)
+            if (!mounted)
             {
-                pause.gamePaused = true;
-                dRunner.StartDialogue("Polar");
-                //dRunner.Stop();
-                polar1 = true;
+                if (!polar1 && bridge1)
+                {
+                    if (!mounted)
+                    {
+                        pause.gamePaused = true;
+                        dRunner.StartDialogue("Polar");
+                    }
+                    //dRunner.Stop();
+                    //polar1 = true;
+                }
+                if (!polar2 && !mounted && polar1)
+                {
+                    if (totalFish > 0)
+                    {
+                        pause.gamePaused = true;
+                        dRunner.StartDialogue("Polar2");
+
+                        totalFish--;
+                        manager.AddFish(totalFish);
+                        //Debug.Log("You befriended Po");
+                        //polar2 = true;
+                    }
+                    else
+                    {
+                        pause.gamePaused = true;
+                        dRunner.StartDialogue("NoFish");
+/*                        manager.SetFeedbackText("Po wants some fish");
+                        manager.displayFeedback1 = true;*/
+                    }
+
+                }
             }
             if (polar2 && !mounted)
             {
                 //Debug.Log("You mounted Po");
                 StartCoroutine(wait());
-            }
-            if (!polar2 && !mounted && polar1)
-            {
-                if(totalFish > 0)
-                {
-                    pause.gamePaused = true;
-                    dRunner.StartDialogue("Polar2");
-                    //dRunner.Stop();
-/*                    manager.SetFeedbackText("Po likes you");
-                    manager.displayFeedback1 = true;*/
-                    totalFish--;
-                    manager.AddFish(totalFish);
-                    //Debug.Log("You befriended Po");
-                    polar2 = true;
-                }
-                else
-                {
-                    manager.SetFeedbackText("Po wants some fish");
-                    manager.displayFeedback1 = true;
-                }
-
             }
         }
     }
@@ -196,10 +208,14 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (!bridge1)
         {
-            pause.gamePaused = true;
-            dRunner.StartDialogue("Bridge1");
+            if (!mounted)
+            {
+                pause.gamePaused = true;
+                dRunner.StartDialogue("Bridge1");
+            }
+
             //dRunner.Stop();
-            bridge1 = true;
+            //bridge1 = true;
         }
         if (bridge1 && polar2 && mounted)
         {
@@ -219,6 +235,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             if (fish.transform.localPosition.x >= catchArea.transform.localPosition.x)
             {
+                AudioManager.manager.PlayAudio("FishCatch");
                 manager.SetFeedbackText("You caught a fish!");
                 manager.displayFeedback1 = true;
                 totalFish++;
@@ -226,6 +243,7 @@ public class PlayerInteractions : MonoBehaviour
             }
             else
             {
+                AudioManager.manager.PlayAudio("FishMiss");
                 manager.SetFeedbackText("You missed!");
                 manager.displayFeedback1 = true;
             }
@@ -249,11 +267,35 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    [YarnCommand("ContinueGame")]
-    public void ContinueGame()
+    [YarnCommand("StartDialogue")]
+    public void StartDialogue()
     {
-        pause.gamePaused = false;
-        //Debug.Log("Game continued");
+        isTalking = true;
+    }
+
+    [YarnCommand("EndDialogue")]
+    public void EndDialogue()
+    {
+        isTalking = false;
+
+        if (pause.gamePaused)
+            pause.gamePaused = false;
+
+        switch(dRunner.CurrentNodeName)
+        {
+            case "Bridge1":
+                bridge1 = true;
+                break;
+            case "Polar":
+                polar1 = true;
+                break;
+            case "Polar2":
+                polar2 = true;
+                break;
+            default:
+                Debug.LogError("Node does not exist");
+                break;
+        }
     }
 
     IEnumerator wait()

@@ -16,6 +16,11 @@ public class Manager : MonoBehaviour
 
     private bool hasMounted = false;
 
+    private void Awake()
+    {
+        AudioManager.manager.PlayAudio("BGM");
+    }
+
     private void Start()
     {
         playerScript = player.GetComponent<PlayerInteractions>();

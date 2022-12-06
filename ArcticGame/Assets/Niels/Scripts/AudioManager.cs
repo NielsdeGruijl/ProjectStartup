@@ -64,10 +64,10 @@ public class AudioManager : MonoBehaviour
         foreach (Sound sound in sounds)
         {
             if (sound.type == Sound.SoundType.SFX)
-                sound.volume = SFXVolume;
+                sound.volume *= SFXVolume;
 
             if (sound.type == Sound.SoundType.Music)
-                sound.volume = MusicVolume;
+                sound.volume *= MusicVolume;
         }
     }
 }
