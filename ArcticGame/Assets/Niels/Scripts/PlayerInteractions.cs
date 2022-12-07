@@ -31,6 +31,8 @@ public class PlayerInteractions : MonoBehaviour
     private bool nearBridge = false;
     private bool catchingFish = false;
     private bool throwSpear = false;
+    private bool nearItem = false;
+    private bool hasSpear = false;
 
     private bool isTalking = false;
     private bool polar1 = false;
@@ -51,29 +53,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Update()
     {
-        if (!isTalking)
-        {
-            if(nearPo || nearWater || mounted || nearBridge)
-                manager.displayText1 = true;
-            else
-                manager.displayText1 = false;
-        }
-        else
-            manager.displayText1 = false;
-
-        if (nearPo)
-        {
-            if (!polar1 || !polar2)
-                manager.SetInteractionText("Press F to talk");
-/*            if (!befriended && polar1)
-                manager.SetInteractionText("Press F to feed");*/
-            if (polar2)
-                manager.SetInteractionText("Press F to mount");
-        }
-        if (nearWater)
-            manager.SetInteractionText("Press F to fish");
-        if (nearBridge)
-            manager.SetInteractionText("Press F to interact");
+        ManageText();
 
         if (catchingFish)
             CatchFish();
@@ -81,12 +61,6 @@ public class PlayerInteractions : MonoBehaviour
         if (!pause.gamePaused)
         {
             PlayerInput();
-        }
-
-        if (mounted)
-        {
-            manager.displayText1 = true;
-            manager.SetInteractionText("Press F to dismount");
         }
     }
 
@@ -106,6 +80,10 @@ public class PlayerInteractions : MonoBehaviour
         {
             nearBridge = true;
         }
+        if(other.CompareTag("Spear"))
+        {
+            nearItem = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -122,6 +100,46 @@ public class PlayerInteractions : MonoBehaviour
         if (other.CompareTag("Bridge"))
         {
             nearBridge = false;
+        }
+        if (other.CompareTag("Spear"))
+        {
+            nearItem = false;
+        }
+    }
+
+    private void ManageText()
+    {
+        if (!isTalking)
+        {
+            if (nearPo || nearWater || mounted || nearBridge)
+                manager.displayText1 = true;
+            else
+                manager.displayText1 = false;
+        }
+        else
+            manager.displayText1 = false;
+
+        if (nearPo)
+        {
+            if (!bridge1)
+                manager.SetInteractionText("");
+            else
+            {
+                if (!polar1 || !polar2)
+                    manager.SetInteractionText("Press F to talk");
+                if (polar2)
+                    manager.SetInteractionText("Press F to mount");
+            }
+        }
+        if (nearWater)
+            manager.SetInteractionText("Press F to fish");
+        if (nearBridge)
+            manager.SetInteractionText("Press F to interact");
+
+        if (mounted)
+        {
+            manager.displayText1 = true;
+            manager.SetInteractionText("Press F to dismount");
         }
     }
 
@@ -147,6 +165,8 @@ public class PlayerInteractions : MonoBehaviour
                 mounted = false;
                 //Debug.Log("You unmounted Po");
             }
+            if (nearItem)
+                PickupItem();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -217,6 +237,11 @@ public class PlayerInteractions : MonoBehaviour
             //dRunner.Stop();
             //bridge1 = true;
         }
+        if(bridge1 && !mounted)
+        {
+            pause.gamePaused = true;
+            dRunner.StartDialogue("BridgeRepeat");
+        }
         if (bridge1 && polar2 && mounted)
         {
 
@@ -267,6 +292,11 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    private void PickupItem()
+    {
+
+    }
+
     [YarnCommand("StartDialogue")]
     public void StartDialogue()
     {
@@ -293,7 +323,7 @@ public class PlayerInteractions : MonoBehaviour
                 polar2 = true;
                 break;
             default:
-                Debug.LogError("Node does not exist");
+                Debug.Log("Node does not exist");
                 break;
         }
     }
@@ -302,6 +332,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         //Debug.Log("mounted set to True");
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         mounted = true;
     }
 }

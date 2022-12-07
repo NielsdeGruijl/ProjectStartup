@@ -21,6 +21,13 @@ Nukilik: The gap is too big for me to cross, I need to find another way.
 <<EndDialogue Player>>
 ===
 
+title: BridgeRepeat
+---
+<<StartDialogue Player>>
+Po: I need to find another way across.
+<<EndDialogue Player>>
+===
+
 title: Polar
 ---
 <<StartDialogue Player>>
@@ -32,7 +39,9 @@ Po: Can you get a fish for me please? I already made a hole in the ice, I'll owe
 
 title: NoFish
 ---
+<<StartDialogue Player>>
 Po: Did you get the fish for me?
+<<EndDialogue Player>>
 ===
 
 title: Spear

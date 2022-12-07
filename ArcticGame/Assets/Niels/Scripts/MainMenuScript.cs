@@ -12,8 +12,8 @@ public class MainMenuScript : MonoBehaviour
 
     public void onQuitClicked()
     {
-        //Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 
 }

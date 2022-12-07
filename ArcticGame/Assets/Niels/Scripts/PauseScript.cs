@@ -16,4 +16,9 @@ public class PauseScript : MonoBehaviour
             pausedMenu.SetActive(gamePaused);
         }
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

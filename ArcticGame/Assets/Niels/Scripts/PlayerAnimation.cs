@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private string currentAnimState;
-
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     public void ChangeAnimationState(string newAnimState)
     {
@@ -20,4 +15,6 @@ public class PlayerAnimation : MonoBehaviour
 
         currentAnimState = newAnimState;
     }
+
+    public void SetBoolean(string boolean, bool state) => animator.SetBool(boolean, state);
 }

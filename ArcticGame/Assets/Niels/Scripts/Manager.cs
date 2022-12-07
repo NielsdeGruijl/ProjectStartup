@@ -50,7 +50,7 @@ public class Manager : MonoBehaviour
         mountedPlayer.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z);
         mountedPlayer.transform.rotation = polarBear.transform.rotation;
         vcam.Follow = mountedPlayer.transform;
-        mounterPolar.SetActive(true);
+        //mounterPolar.SetActive(true);
         mountedPlayer.SetActive(true);
     }
 
@@ -58,12 +58,12 @@ public class Manager : MonoBehaviour
     {
         Debug.Log("dismounting player...");
         player.transform.position = mountedPlayer.transform.position;
-        polarBear.transform.position = new Vector3(mountedPlayer.transform.position.x + 1, mountedPlayer.transform.position.y - 2.5f, mountedPlayer.transform.position.z);
+        polarBear.transform.position = new Vector3(mountedPlayer.transform.position.x + 1, mountedPlayer.transform.position.y - 0.5f, mountedPlayer.transform.position.z);
         vcam.Follow = player.transform;
         player.SetActive(true);
         polarBear.SetActive(true);
         mountedPlayer.SetActive(false);
-        mounterPolar.SetActive(false);
+        //mounterPolar.SetActive(false);
         Debug.Log("player dismounted");
     }
 }

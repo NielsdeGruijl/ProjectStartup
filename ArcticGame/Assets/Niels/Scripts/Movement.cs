@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private PauseScript pause;
 
     private PlayerAnimation animator;
+    private PlayerInteractions playerScript;
 
     private Rigidbody rb;
 
@@ -19,6 +20,7 @@ public class Movement : MonoBehaviour
     private float zVelocity;
 
     private bool canStartFootStep = true;
+    public bool isWalking = false;
 
     private void Awake()
     {
@@ -27,9 +29,20 @@ public class Movement : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         }
 
-        animator = GetComponent<PlayerAnimation>();
+        playerScript = GetComponent<PlayerInteractions>();
+        animator = GetComponent<PlayerAnimation>();            
+    }
 
-        animator.ChangeAnimationState("Idle");
+    private void Start()
+    {
+        if(animator.enabled && playerScript.mounted)
+        {
+            animator.enabled = false;
+        }
+        else
+        {
+            animator.enabled = true;
+        }
     }
 
     private void Update()
@@ -41,14 +54,22 @@ public class Movement : MonoBehaviour
 
         if (rb.velocity.x != 0 || rb.velocity.z != 0)
         {
-            animator.ChangeAnimationState("Walking");
+            if (!playerScript.mounted && !isWalking)
+            {
+                animator.SetBoolean("Walking", true);
+                isWalking = true;
+            }
 
             if(canStartFootStep)
                 StartCoroutine(FootSteps());
         }
         else
         {
-            animator.ChangeAnimationState("Idle");
+            if (!playerScript.mounted && isWalking)
+            {
+                animator.SetBoolean("Walking", false);
+                isWalking = false;
+            }  
         }
     }
 
@@ -71,7 +92,28 @@ public class Movement : MonoBehaviour
     private IEnumerator FootSteps()
     {
         canStartFootStep = false;
-        AudioManager.manager.PlayAudio("FootStep1");
+        int footstep = Random.Range(1, 5);
+        Debug.Log(footstep);
+        string audioFile = "";
+
+        switch (footstep)
+        {
+            case 1:
+                audioFile = "FootStep1";
+                break;
+            case 2:
+                audioFile = "FootStep2";
+                break;
+            case 3:
+                audioFile = "FootStep3";
+                break;
+            case 4:
+                audioFile = "FootStep4";
+                break;
+        }
+
+        AudioManager.manager.PlayAudio(audioFile);
+
         yield return new WaitForSeconds(0.5f);
         canStartFootStep = true;
     }
