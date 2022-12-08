@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Text interactionText;
     [SerializeField] private Text feedbackText;
-    [SerializeField] private Text fishText;
+    [SerializeField] private TMP_Text fishText;
 
     private float alpha;
 
@@ -38,7 +39,7 @@ public class UIManager : MonoBehaviour
 
     public void AddFish(float totalFish)
     {
-        fishText.text = "Fish: " + totalFish;
+        fishText.text = totalFish.ToString();
     }
 
     private IEnumerator ShowFeedback()

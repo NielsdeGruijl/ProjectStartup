@@ -15,6 +15,7 @@ public class PlayerInteractions : MonoBehaviour
     [Header("movement")]
     [SerializeField] private Movement movement;
     [SerializeField] private MountedMovement mountedMovement;
+    [SerializeField] private PolarBearScript polarScript;
 
     [Header("Fishing Game")]
     [SerializeField] private GameObject fishingGame;
@@ -43,7 +44,7 @@ public class PlayerInteractions : MonoBehaviour
     private bool catchingFish = false;
     private bool throwSpear = false;
     private bool nearItem = false;
-    private bool hasSpear = true;
+    private bool hasSpear = false;
 
     private bool isTalking = false;
     private bool polar1 = false;
@@ -154,7 +155,9 @@ public class PlayerInteractions : MonoBehaviour
         if (!isTalking)
         {
             if (nearPo || nearWater || mounted || nearBridge || nearItem)
-                manager.displayText1 = true;
+            {
+               manager.displayText1 = true;
+            }
             else
                 manager.displayText1 = false;
         }
@@ -184,6 +187,12 @@ public class PlayerInteractions : MonoBehaviour
         {
             manager.displayText1 = true;
             manager.SetInteractionText("Press F to dismount");
+        }
+
+        if (polarScript.isJumping)
+        {
+            manager.displayText1 = false;
+            manager.SetInteractionText("");
         }
     }
 
@@ -322,7 +331,7 @@ public class PlayerInteractions : MonoBehaviour
                 manager.displayFeedback1 = true;
             }
 
-            fish.transform.localPosition = Vector3.zero;
+            fish.transform.localPosition = new Vector3(42, 0, 0);
             fishingGame.SetActive(false);
             fishCamera.SetActive(false);
             //fishingSpear.SetActive(false);
@@ -337,16 +346,7 @@ public class PlayerInteractions : MonoBehaviour
         float multiplier = 1 + ((fish.transform.localPosition.x / fishRect.rect.width) * 5);
         fish.transform.Translate((Vector3.right * fishSpeed * multiplier) * Time.deltaTime);
 
-/*        if (fish.transform.localPosition.x >= fishRect.rect.width)
-        {
-            fishSpeed = -1;
-        }
-        if(fish.transform.localPosition.x <= 0)
-        {
-            fishSpeed = 1;
-        }*/
-
-        if(fish.transform.localPosition.x >= fishRect.rect.width || fish.transform.localPosition.x <= 0)
+        if(fish.transform.localPosition.x >= 590 || fish.transform.localPosition.x <= 40)
         {
             fishSpeed *= -1;
         }

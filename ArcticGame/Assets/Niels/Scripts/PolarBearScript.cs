@@ -6,6 +6,9 @@ public class PolarBearScript : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject bridgeCam;
+    [SerializeField] private GameObject EndGameUI;
+    [SerializeField] private PauseScript pause;
+
     private MountedMovement movement;
 
     private Animator anim;
@@ -22,7 +25,7 @@ public class PolarBearScript : MonoBehaviour
     public bool moving = false;
     private bool nearBridge = false;
     private bool hasJumped = false;
-    private bool isJumping = false;
+    public bool isJumping = false;
 
     private void Start()
     {
@@ -72,12 +75,12 @@ public class PolarBearScript : MonoBehaviour
         if (isJumping)
             return;
 
-        if (canIdle && !mounted)
+/*        if (canIdle && !mounted)
         {
             randWait = Random.Range(3, 8);
             Debug.Log(randWait);
             StartCoroutine(Idle2());
-        }
+        }*/
         
         if (mounted && !moving)
         {
@@ -133,5 +136,13 @@ public class PolarBearScript : MonoBehaviour
         yield return new WaitForSeconds(2);
         movement.canMove = true;
         ChangeAnimationState("Jump");
+        StartCoroutine(endGame());
+    }
+
+    IEnumerator endGame()
+    {
+        yield return new WaitForSeconds(3.5f);
+        pause.gamePaused = true;
+        EndGameUI.SetActive(true);
     }
 }

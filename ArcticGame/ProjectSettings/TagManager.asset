@@ -10,6 +10,7 @@ TagManager:
   - Bridge
   - Spear
   - Jump
+  - EndGame
   layers:
   - Default
   - TransparentFX
