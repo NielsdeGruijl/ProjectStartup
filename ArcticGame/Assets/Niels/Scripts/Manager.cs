@@ -7,7 +7,6 @@ public class Manager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject mountedPlayer;
-    [SerializeField] private GameObject mounterPolar;
     [SerializeField] private GameObject polarBear;
     [SerializeField] private CinemachineVirtualCamera vcam;
 
@@ -46,11 +45,9 @@ public class Manager : MonoBehaviour
     public void MountPlayer()
     {
         player.SetActive(false);
-        polarBear.SetActive(false);
         mountedPlayer.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z);
         mountedPlayer.transform.rotation = polarBear.transform.rotation;
-        vcam.Follow = mountedPlayer.transform;
-        //mounterPolar.SetActive(true);
+        vcam.Follow = polarBear.transform;
         mountedPlayer.SetActive(true);
     }
 
@@ -58,12 +55,11 @@ public class Manager : MonoBehaviour
     {
         Debug.Log("dismounting player...");
         player.transform.position = mountedPlayer.transform.position;
-        polarBear.transform.position = new Vector3(mountedPlayer.transform.position.x + 1, mountedPlayer.transform.position.y - 0.5f, mountedPlayer.transform.position.z);
+        polarBear.transform.position = new Vector3(mountedPlayer.transform.position.x + 1, mountedPlayer.transform.position.y - 1f, mountedPlayer.transform.position.z);
         vcam.Follow = player.transform;
         player.SetActive(true);
-        polarBear.SetActive(true);
         mountedPlayer.SetActive(false);
-        //mounterPolar.SetActive(false);
+        mountedPlayer.transform.SetParent(polarBear.transform);
         Debug.Log("player dismounted");
     }
 }

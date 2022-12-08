@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Movement : MonoBehaviour
+public class MountedMovement : MonoBehaviour
 {
     [SerializeField] private PauseScript pause;
-
-    private PlayerAnimation animator;
-    private PlayerInteractions playerScript;
 
     private Rigidbody rb;
 
@@ -20,8 +17,7 @@ public class Movement : MonoBehaviour
     private float zVelocity;
 
     private bool canStartFootStep = true;
-    public bool isWalking = false;
-    public bool moving = false;
+    public bool canMove = true;
 
     private void Awake()
     {
@@ -29,58 +25,31 @@ public class Movement : MonoBehaviour
         {
             rb = GetComponent<Rigidbody>();
         }
-
-        playerScript = GetComponent<PlayerInteractions>();
-        animator = GetComponent<PlayerAnimation>();            
-    }
-
-    private void Start()
-    {
-/*        if(animator.enabled && playerScript.mounted)
-        {
-            animator.enabled = false;
-        }
-        else
-        {
-            animator.enabled = true;
-        }*/
     }
 
     private void Update()
     {
-        if (pause.gamePaused)
+        if (pause.gamePaused || !canMove)
             playerVelocity = Vector3.zero;
         else
             Walking();
 
         if (rb.velocity.x != 0 || rb.velocity.z != 0)
         {
-            moving = true;
-            if (!playerScript.mounted && !isWalking)
-            {
-                //animator.SetBoolean("Walking", true);
-                //animator.ChangeAnimationState("walking");
-                isWalking = true;
-            }
-
-            if(canStartFootStep)
+            if (canStartFootStep)
                 StartCoroutine(FootSteps());
         }
-        else
-        {
-            moving = false;
-            if (!playerScript.mounted && isWalking)
-            {
-                //animator.ChangeAnimationState("Idle");
-                isWalking = false;
-            }  
-        }
+
+        //Debug.Log(playerVelocity);
     }
 
     private void Walking()
     {
-        xVelocity = Input.GetAxisRaw("Horizontal");
-        zVelocity = Input.GetAxisRaw("Vertical");
+        if(canMove)
+        {
+            xVelocity = Input.GetAxisRaw("Horizontal");
+            zVelocity = Input.GetAxisRaw("Vertical");
+        }
 
         playerVelocity = new Vector3(xVelocity, 0, zVelocity);
         playerVelocity = playerVelocity.normalized;
@@ -91,6 +60,11 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(playerVelocity * movementSpeed);
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return playerVelocity;
     }
 
     private IEnumerator FootSteps()
@@ -122,3 +96,4 @@ public class Movement : MonoBehaviour
         canStartFootStep = true;
     }
 }
+

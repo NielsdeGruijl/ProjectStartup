@@ -16,9 +16,15 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject fish;
     [SerializeField] private GameObject catchArea;
+    [SerializeField] private GameObject fishingSpear;
+
     private GameObject fishCamera;
 
     private GameObject animal;
+    private GameObject spear;
+
+    private PlayerAnimation anim;
+    private Movement movement;
 
     private RectTransform fishRect;
 
@@ -39,8 +45,15 @@ public class PlayerInteractions : MonoBehaviour
     private bool polar2 = false;
     private bool bridge1 = false;
 
+    public bool idle = true;
+    public bool fishing = false;
+    public bool fishStabbing = false;
+
     private void Start()
     {
+        anim = GetComponent<PlayerAnimation>();
+        movement = GetComponent<Movement>();
+
         pause.gamePaused = true;
 
         if (mounted)
@@ -55,12 +68,21 @@ public class PlayerInteractions : MonoBehaviour
     {
         ManageText();
 
+        if (!catchingFish && !movement.moving)
+            idle = true;
+
         if (catchingFish)
             CatchFish();
 
         if (!pause.gamePaused)
         {
             PlayerInput();
+        }
+
+        if(spear != null)
+        {
+            if (!spear.activeInHierarchy && nearItem && hasSpear)
+                nearItem = false;
         }
     }
 
@@ -83,6 +105,7 @@ public class PlayerInteractions : MonoBehaviour
         if(other.CompareTag("Spear"))
         {
             nearItem = true;
+            spear = other.transform.parent.gameObject;
         }
     }
 
@@ -111,7 +134,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (!isTalking)
         {
-            if (nearPo || nearWater || mounted || nearBridge)
+            if (nearPo || nearWater || mounted || nearBridge || nearItem)
                 manager.displayText1 = true;
             else
                 manager.displayText1 = false;
@@ -135,6 +158,8 @@ public class PlayerInteractions : MonoBehaviour
             manager.SetInteractionText("Press F to fish");
         if (nearBridge)
             manager.SetInteractionText("Press F to interact");
+        if (nearItem)
+            manager.SetInteractionText("Press F to pick up");
 
         if (mounted)
         {
@@ -153,7 +178,10 @@ public class PlayerInteractions : MonoBehaviour
             }
             if (nearWater)
             {
-                catchingFish = true;
+                if (hasSpear)
+                    catchingFish = true;
+                else
+                    dRunner.StartDialogue("NoSpear");
             }
             if (nearBridge)
             {
@@ -253,11 +281,17 @@ public class PlayerInteractions : MonoBehaviour
         manager.SetInteractionText("Press SpaceBar to catch");
         fishingGame.SetActive(true);
         fishCamera.SetActive(true);
+        fishingSpear.SetActive(true);
+
+        //anim.ChangeAnimationState("FishLooking");
+        fishing = true;
 
         MoveFish();
 
         if (throwSpear)
         {
+            //anim.ChangeAnimationState("FishStabbing");
+            fishStabbing = true;
             if (fish.transform.localPosition.x >= catchArea.transform.localPosition.x)
             {
                 AudioManager.manager.PlayAudio("FishCatch");
@@ -276,6 +310,8 @@ public class PlayerInteractions : MonoBehaviour
             fish.transform.localPosition = Vector3.zero;
             fishingGame.SetActive(false);
             fishCamera.SetActive(false);
+            fishingSpear.SetActive(false);
+            fishing = false;
             throwSpear = false;
             catchingFish = false;
         }
@@ -294,7 +330,9 @@ public class PlayerInteractions : MonoBehaviour
 
     private void PickupItem()
     {
-
+        dRunner.StartDialogue("Spear");
+        hasSpear = true;
+        spear.SetActive(false);
     }
 
     [YarnCommand("StartDialogue")]

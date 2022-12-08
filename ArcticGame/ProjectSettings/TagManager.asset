@@ -8,6 +8,8 @@ TagManager:
   - Water
   - fish
   - Bridge
+  - Spear
+  - Jump
   layers:
   - Default
   - TransparentFX

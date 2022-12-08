@@ -24,7 +24,7 @@ Nukilik: The gap is too big for me to cross, I need to find another way.
 title: BridgeRepeat
 ---
 <<StartDialogue Player>>
-Po: I need to find another way across.
+Nukilik: I need to find another way across.
 <<EndDialogue Player>>
 ===
 
@@ -47,7 +47,14 @@ Po: Did you get the fish for me?
 title: Spear
 ---
 <<StartDialogue Player>>
-Nukilik: I need the spear from home.
+Nukilik: Mom must have forgot one of her fishing spears.
+<<EndDialogue Player>>
+===
+
+title: NoSpear
+---
+<<StartDialogue Player>>
+Nukilik: I need a fishing spear.
 <<EndDialogue Player>>
 ===
 
