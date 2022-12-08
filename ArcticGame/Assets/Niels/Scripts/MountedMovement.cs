@@ -18,6 +18,7 @@ public class MountedMovement : MonoBehaviour
 
     private bool canStartFootStep = true;
     public bool canMove = true;
+    public bool moving = false;
 
     private void Awake()
     {
@@ -36,8 +37,13 @@ public class MountedMovement : MonoBehaviour
 
         if (rb.velocity.x != 0 || rb.velocity.z != 0)
         {
+            moving = true;
             if (canStartFootStep)
                 StartCoroutine(FootSteps());
+        }
+        else
+        {
+            moving = false;
         }
 
         //Debug.Log(playerVelocity);

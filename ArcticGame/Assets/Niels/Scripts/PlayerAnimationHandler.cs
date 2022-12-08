@@ -22,7 +22,10 @@ public class PlayerAnimationHandler : MonoBehaviour
         if (!playerInteractions.idle || playerMovement.moving)
             anim.ChangeAnimationState("Walking");
         if (playerInteractions.fishing)
+        {
             anim.ChangeAnimationState("FishLooking");
+            //playerMovement.moving = false;
+        }
         if (playerInteractions.fishStabbing)
         {
             anim.ChangeAnimationState("FishStabbing");

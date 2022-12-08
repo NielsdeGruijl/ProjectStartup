@@ -12,6 +12,10 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private DialogueRunner dRunner;
     [SerializeField] private LineView lineView;
 
+    [Header("movement")]
+    [SerializeField] private Movement movement;
+    [SerializeField] private MountedMovement mountedMovement;
+
     [Header("Fishing Game")]
     [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject fish;
@@ -24,7 +28,8 @@ public class PlayerInteractions : MonoBehaviour
     private GameObject spear;
 
     private PlayerAnimation anim;
-    private Movement movement;
+/*    private Movement movement;
+    private MountedMovement mountedMovement;*/
 
     private RectTransform fishRect;
 
@@ -38,7 +43,7 @@ public class PlayerInteractions : MonoBehaviour
     private bool catchingFish = false;
     private bool throwSpear = false;
     private bool nearItem = false;
-    private bool hasSpear = false;
+    private bool hasSpear = true;
 
     private bool isTalking = false;
     private bool polar1 = false;
@@ -52,7 +57,10 @@ public class PlayerInteractions : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<PlayerAnimation>();
-        movement = GetComponent<Movement>();
+/*        if (!mounted)
+            movement = GetComponent<Movement>();
+        else
+            mountedMovement = GetComponent<MountedMovement>();*/
 
         pause.gamePaused = true;
 
@@ -68,8 +76,19 @@ public class PlayerInteractions : MonoBehaviour
     {
         ManageText();
 
-        if (!catchingFish && !movement.moving)
-            idle = true;
+        if (!catchingFish)
+        {
+            if (!mounted)
+            {
+                if(!movement.moving)
+                    idle = true;
+            }
+            if(mounted)
+            {
+                if (!mountedMovement.moving)
+                    idle = true;
+            }
+        }
 
         if (catchingFish)
             CatchFish();
@@ -105,7 +124,7 @@ public class PlayerInteractions : MonoBehaviour
         if(other.CompareTag("Spear"))
         {
             nearItem = true;
-            spear = other.transform.parent.gameObject;
+            spear = other.gameObject;
         }
     }
 
@@ -270,10 +289,6 @@ public class PlayerInteractions : MonoBehaviour
             pause.gamePaused = true;
             dRunner.StartDialogue("BridgeRepeat");
         }
-        if (bridge1 && polar2 && mounted)
-        {
-
-        }
     }
 
     private void CatchFish()
@@ -281,10 +296,10 @@ public class PlayerInteractions : MonoBehaviour
         manager.SetInteractionText("Press SpaceBar to catch");
         fishingGame.SetActive(true);
         fishCamera.SetActive(true);
-        fishingSpear.SetActive(true);
+        //fishingSpear.SetActive(true);
+        //fishing = true;
 
         //anim.ChangeAnimationState("FishLooking");
-        fishing = true;
 
         MoveFish();
 
@@ -310,8 +325,8 @@ public class PlayerInteractions : MonoBehaviour
             fish.transform.localPosition = Vector3.zero;
             fishingGame.SetActive(false);
             fishCamera.SetActive(false);
-            fishingSpear.SetActive(false);
-            fishing = false;
+            //fishingSpear.SetActive(false);
+            //fishing = false;
             throwSpear = false;
             catchingFish = false;
         }
@@ -322,7 +337,16 @@ public class PlayerInteractions : MonoBehaviour
         float multiplier = 1 + ((fish.transform.localPosition.x / fishRect.rect.width) * 5);
         fish.transform.Translate((Vector3.right * fishSpeed * multiplier) * Time.deltaTime);
 
-        if (fish.transform.localPosition.x >= fishRect.rect.width || fish.transform.localPosition.x <= 0)
+/*        if (fish.transform.localPosition.x >= fishRect.rect.width)
+        {
+            fishSpeed = -1;
+        }
+        if(fish.transform.localPosition.x <= 0)
+        {
+            fishSpeed = 1;
+        }*/
+
+        if(fish.transform.localPosition.x >= fishRect.rect.width || fish.transform.localPosition.x <= 0)
         {
             fishSpeed *= -1;
         }
